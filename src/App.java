@@ -1,25 +1,35 @@
-import java.util.Arrays;
 import java.util.OptionalInt;
 import java.util.Random;
 import java.util.stream.IntStream;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        int[] arr = new int[20];
-
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = App.getRandomNumberUsingInts(0, 20);
-         }
-         IntStream stream = Arrays.stream(arr);
-       
-       // App.displayCroissant(stream);
-       // App.displayFirst(stream);
-        App.sommeSuperieur(stream,3);
-        
-        
+    @FunctionalInterface
+    public interface DisplayPositifs {
+    
+        boolean displayPositif(int s);
+    
     }
 
-    public static int getRandomNumberUsingInts(int min, int max) {
+    public static void affichagePositif(int[] array, DisplayPositifs function) {
+        for (int i = 0; i < array.length; i++) {
+             Boolean superieur =  function.displayPositif(array[i]);
+             if(superieur){
+                 System.out.println(array[i]);
+             }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        Membres membres = new Membres();
+        membres.apres1991();
+        membres.annee1995();
+        membres.avant1990();
+        membres.nomPrenomDesc();
+        membres.genreF();
+        membres.genreLower();
+    }
+
+    public static int getRandomNumber(int min, int max) {
         Random random = new Random();
         return random.ints(min, max)
           .findFirst()
@@ -42,4 +52,6 @@ public class App {
        .reduce(0, (subtotal, element) -> subtotal + element);
        System.out.println(total);
      }
+
+   
 }
